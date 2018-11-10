@@ -8,7 +8,7 @@ class HomeService extends Service {
                 {id: 2, title: 'li2', time: new Date().getTime()},
             ]
         }
-        console.log(dataList);
+        this.ctx.logger.info('dataList: ', dataList);
         return dataList;
     }
 }

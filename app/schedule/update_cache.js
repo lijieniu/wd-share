@@ -3,7 +3,7 @@ const Subscription = require('egg').Subscription;
 class UpdateCache extends Subscription {
     static get schedule() {
         return {
-            interval: '10s', // 1分钟间隔
+            interval: '1m', // 1分钟间隔
             type: 'all' // 指定所有的worker都需要执行
         }
     }

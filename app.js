@@ -1,4 +1,5 @@
 module.exports = app => {
+    app.logger.info('启动了');
     app.once('server', server => {
         console.log('server started!');
     });
