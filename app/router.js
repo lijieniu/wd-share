@@ -12,6 +12,11 @@ module.exports = app => {
     router.get('/user/hhh', controller.user.hhh);
     router.get('/user/:id', controller.user.info);
 
+    router.post('/upload', controller.file.upload);
+
+    router.get('/addcookie', controller.cookie.add);
+    router.get('/removecookie', controller.cookie.remove);
+
     router.redirect('/hhh', '/', 302);
 
     require('./router/users')(app);

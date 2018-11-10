@@ -26,3 +26,9 @@ exports.gzip = {
         return reg.test(ctx.get('user-agent'));
     }
 }
+
+exports.multipart = {
+    mode: 'file',
+    // whitelist: ['.doc'] // 覆盖整个白名单
+    fileExtensions: ['.doc']
+}
