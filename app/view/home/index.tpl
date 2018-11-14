@@ -19,6 +19,19 @@
     </form>
     请输入关键字：<input id="search_input"> <button id="search_btn">搜索</button>
     <script>
+        // 监听页面crash
+        window.addEventListener('load', () => {
+            sessionStorage.setItem('good_exit', 'pengding');
+            setInterval(() => {
+                sessionStorage.setItem('time_before_crash', Date.now().toString());
+            }, 1000);
+        });
+        window.addEventListener('beforeunload', () => {
+            sessionStorage.setItem('good_exit', 'true');
+        });
+        if(sessionStorage.getItem('good_exit') && sessionStorage.getItem('good_exit') !== 'true') {
+            alert('Hey, welcome back from crash');
+        }
         function debounce(fn, delay, immediate) {
             let timer = null;
             return function() {
