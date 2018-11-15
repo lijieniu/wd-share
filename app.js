@@ -13,6 +13,9 @@ module.exports = app => {
         const used = Date.now() - ctx.starttime;
         console.log('request used ', used);
     });
+    app.messenger.on('xxx_action', data => {
+        console.log(data);
+    });
     app.beforeStart(async () => {
         // 可以在请求的时候获取Context实例,但是在非用户请求的时候可以通过Application.createAnonymousContext()方法创建一个匿名的Context实例
         const ctx = app.createAnonymousContext();
