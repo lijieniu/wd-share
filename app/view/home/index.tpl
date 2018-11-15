@@ -57,6 +57,7 @@
         function doSearch() {
             console.log(searchInput.value)
         }
+        
         searchInput.addEventListener('input', debounce(doSearch, 5000));
         document.getElementById("search_btn").addEventListener('click', debounce(doSearch, 2000, true));
     </script>
