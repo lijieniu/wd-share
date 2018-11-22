@@ -1,3 +1,5 @@
+const path = require('path');
+
 exports.keys = 'wd-share';
 
 exports.view = {
@@ -5,7 +7,17 @@ exports.view = {
     mapping: {
         '.tpl': 'nunjucks'
     }
-}
+}; 
+
+// module.exports = appInfo => {
+//     const config = {};
+//     config.view = {
+//         root: [
+//             path.join(appInfo.baseDir, 'app/view')
+//         ].join(',')
+//     }
+//     return config;
+// }
 
 exports.middleware = [
     'robot',
@@ -31,4 +43,9 @@ exports.multipart = {
     mode: 'file',
     // whitelist: ['.doc'] // 覆盖整个白名单
     fileExtensions: ['.doc']
+}
+
+// 统一错误处理
+exports.onerror = {
+    errorPageUrl: '/500.html'
 }
