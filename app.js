@@ -1,7 +1,7 @@
 module.exports = app => {
     app.logger.info('启动了');
     app.once('server', server => {
-        console.log('server started!!');
+        console.log('server started!!!');
     });
     app.on('error', (err, ctx) => {
         console.error(err);
