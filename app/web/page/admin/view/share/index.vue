@@ -1,16 +1,10 @@
 <template>
     <div>
-        <p>用户管理</p>
+        <p>分享管理</p>
         <div class="search">
             <el-row class="clear">
-                <label> 姓名:</label><el-input class="search-input" clearable v-model="q.title" placeholder="学生姓名"></el-input>
-                <label> 班级:</label><el-select  v-model="q.categoryId" placeholder="班级">
-                <el-option v-for="item in categories"
-                           :key="item.id"
-                           :label="item.name"
-                           :value="item.categoryId">
-                </el-option>
-            </el-select>
+                <label> 姓名:</label><el-input class="search-input" clearable v-model="q.username" placeholder="姓名"></el-input>
+                <label> 标题:</label><el-input class="search-input" clearable v-model="q.title" placeholder="标题"></el-input>
                 <label> 状态:</label><el-select  v-model="q.status" placeholder="状态">
                 <el-option v-for="item in status"
                            :key="item.id"
@@ -22,7 +16,7 @@
             </el-row>
         </div>
         <el-table
-                :data="userList"
+                :data="shareList"
                 v-loading="loading"
                 element-loading-text="拼命加载中"
                 border
@@ -35,7 +29,7 @@
             <el-table-column
                     prop="username"
                     label="姓名"
-                    width="200">
+                    width="100">
             </el-table-column>
             <el-table-column
                     prop="department"
@@ -103,13 +97,14 @@
 
 </style>
 <script type="babel">
-import { SET_ARTICLE_LIST, DELETE_ARTICLE, SET_USER_LIST } from '../../store/mutation-type';
+import { SET_SHARE_LIST } from '../../store/mutation-type';
 export default {
   components: {},
   data() {
     return {
       q: {
         title: undefined,
+        username: '',
         categoryId: undefined,
         statusId: undefined,
         pageIndex: 1,
@@ -123,7 +118,7 @@ export default {
   },
   methods: {
     fetchApi({ $store, $router }, json) {
-      return $store.dispatch(SET_USER_LIST, json);
+      return $store.dispatch(SET_SHARE_LIST, json);
     },
     query() {
       this.fetchApi(this, this.q);
@@ -185,10 +180,10 @@ export default {
       ];
     },
     total() {
-      return this.$store.state.articleTotal;
+      return this.$store.state.shareTotal;
     },
-    userList() {
-      return this.$store.state.userList;
+    shareList() {
+      return this.$store.state.shareList;
     }
   }
 };

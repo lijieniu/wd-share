@@ -9,6 +9,11 @@ const menu = {
     icon: 'el-icon-menu',
     path: '/user'
   },
+  share: {
+    name: 'menu.sharemanage',
+    icon: 'el-icon-menu',
+    path: '/share'
+  },
   content: {
     name: 'menu.articlemanage',
     icon: 'el-icon-document',

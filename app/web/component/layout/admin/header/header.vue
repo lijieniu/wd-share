@@ -53,7 +53,7 @@ export default {
       collapse: false,
       site: {
         name: "Admin",
-        description: "智慧课堂"
+        description: "豌豆分享"
       }
     };
   },

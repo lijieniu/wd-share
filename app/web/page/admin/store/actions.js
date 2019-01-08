@@ -35,6 +35,16 @@ const actions = {
         commit(Type.DELETE_ARTICLE, { id });
       });
   },
+  SET_USER_LIST: (store) => {
+    return request.get('/admin/api/users').then(response => {
+      store.commit(Type.SET_USER_LIST, response.data);
+    });
+  },
+  SET_SHARE_LIST: (store) => {
+    return request.get('/admin/api/share').then(response => {
+      store.commit(Type.SET_SHARE_LIST, response.data.data);
+    });
+  }
 };
 
 export default actions;

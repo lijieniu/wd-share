@@ -13,6 +13,11 @@ export default function createStore(initState) {
     articleTotal: 0,
     articleList: [],
     article: {},
+    // user
+    userList: [],
+    // share
+    shareList: [],
+    shareTotal: 0,
     ...initState
   };
   return new Vuex.Store({

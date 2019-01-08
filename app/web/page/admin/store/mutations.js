@@ -4,8 +4,11 @@ import {
   SET_ARTICLE_LIST,
   SET_ARTICLE_DETAIL,
   SET_SAVE_ARTICLE,
-  DELETE_ARTICLE
+  DELETE_ARTICLE,
+  SET_USER_LIST,
+  SET_SHARE_LIST
 } from './mutation-type';
+import { strictEqual } from 'assert';
 
 const mutations = {
   [SET_ARTICLE_LIST](state, { list, total }) {
@@ -24,6 +27,13 @@ const mutations = {
     state.articleList = state.articleList.filter(item => {
       return item.id !== id;
     });
+  },
+  [SET_USER_LIST](state, { list }) {
+    state.userList = list;
+  },
+  [SET_SHARE_LIST](state, { list, total }) {
+    state.shareList = list;
+    state.shareTotal = total;
   }
 };
 export default mutations;
