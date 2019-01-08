@@ -1,15 +1,9 @@
-const Controller = require('./core/base_controller');
+const Controller = require('egg').Controller;
+const crypto = require('crypto');
 
-class UserController extends Controller {
-    async info() {
-        const { ctx } = this;
-        this.success({
-            name: `hello ${ctx.params.id}`
-        });
-    }
-
-    async hhh() {
-        this.notFound();
+class UserController extends Controller{
+    async index() {
+        this.ctx.body = await this.ctx.service.user.getUserList();
     }
 }
 

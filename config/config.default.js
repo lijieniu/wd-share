@@ -1,51 +1,62 @@
+'use strict';
 const path = require('path');
+const fs = require('fs');
+module.exports = app => {
+  const exports = {};
 
-exports.keys = 'wd-share';
+  exports.siteFile = {
+    '/favicon.ico': fs.readFileSync(path.join(app.baseDir, 'app/web/asset/images/favicon.ico'))
+  };
 
-exports.view = {
-    defaultViewEngine: 'nunjucks',
-    mapping: {
-        '.tpl': 'nunjucks'
-    }
-}; 
+  exports.vuessr = {
+    layout: path.join(app.baseDir, 'app/web/view/layout.html')
+  };
 
-// module.exports = appInfo => {
-//     const config = {};
-//     config.view = {
-//         root: [
-//             path.join(appInfo.baseDir, 'app/view')
-//         ].join(',')
-//     }
-//     return config;
-// }
+  exports.logger = {
+    consoleLevel: 'DEBUG',
+    dir: path.join(app.baseDir, 'logs')
+  };
 
-exports.middleware = [
-    'robot',
-    'gzip'
-];
+  exports.static = {
+    prefix: '/public/',
+    dir: path.join(app.baseDir, 'public')
+  };
 
-exports.robot = {
-    ua: [
-        /niu/i
-    ]
+  exports.keys = app.name + '_1543719331264_1174';
+
+  exports.middleware = [
+    'locals',
+    'access',
+    'errorHandler'
+  ];
+
+  exports.errorHandler = {
+    // match: /^\/admin\/api|\/user\/login|\/user\/register/
+    match: /^\/admin\/api/
+  }
+
+//   exports.mysql = {
+//     client: {
+//       host: '127.0.0.1',
+//       port: '3306',
+//       user: 'root',
+//       password: 'Niuniubang1',
+//       database: 'smartyclass'
+//     },
+//     app: true,
+//     agent: false
+//   };
+
+  exports.security = {
+    csrf: {
+      cookieName: 'csrfToken',
+      // sessionName: 'csrfToken',
+      headerName: 'x-csrf-token',
+    },
+    xframe: {
+      enable: false,
+    },
+  };
+
+  return exports;
 };
-
-exports.gzip = {
-    threshold: 1024,
-    enable: true,
-    match(ctx) {
-        const reg = /iphone|ipad|ipod/i;
-        return reg.test(ctx.get('user-agent'));
-    }
-}
-
-exports.multipart = {
-    mode: 'file',
-    // whitelist: ['.doc'] // 覆盖整个白名单
-    fileExtensions: ['.doc']
-}
-
-// 统一错误处理
-exports.onerror = {
-    errorPageUrl: '/500.html'
-}
