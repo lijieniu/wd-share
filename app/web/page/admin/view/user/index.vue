@@ -3,8 +3,8 @@
         <p>用户管理</p>
         <div class="search">
             <el-row class="clear">
-                <label> 姓名:</label><el-input class="search-input" clearable v-model="q.title" placeholder="学生姓名"></el-input>
-                <label> 班级:</label><el-select  v-model="q.categoryId" placeholder="班级">
+                <label> 姓名:</label><el-input class="search-input" clearable v-model="q.title" placeholder="姓名"></el-input>
+                <label> 部门:</label><el-select  v-model="q.categoryId" placeholder="部门">
                 <el-option v-for="item in categories"
                            :key="item.id"
                            :label="item.name"
