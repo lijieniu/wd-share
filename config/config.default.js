@@ -52,7 +52,7 @@ module.exports = app => {
       cookieName: 'csrfToken',
       // sessionName: 'csrfToken',
       headerName: 'x-csrf-token',
-      enable: false
+      enable: true
     },
     xframe: {
       enable: false,

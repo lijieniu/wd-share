@@ -1,50 +1,6 @@
 <template>
   <el-row class="panel-group" :gutter="40">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class='card-panel' @click="handleSetLineChartData('newVisitis')">
-        <div class="card-panel-icon-wrapper icon-people">
-          <div icon-class="peoples" class-name="card-panel-icon"></div>
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">New Visits</div>
-          <span class="card-panel-num">2600</span>
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('messages')">
-        <div class="card-panel-icon-wrapper icon-message">
-          <div icon-class="message" class-name="card-panel-icon" ></div>
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">Messages</div>
-          <span class="card-panel-num">3000</span>
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('purchases')">
-        <div class="card-panel-icon-wrapper icon-money">
-          <div icon-class="money" class-name="card-panel-icon" ></div>
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">Purchases</div>
-          <span class="card-panel-num">3200</span>
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('shoppings')">
-        <div class="card-panel-icon-wrapper icon-shoppingCard">
-          <div icon-class="shoppingCard" class-name="card-panel-icon" ></div>
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">Shoppings</div>
-          <span class="card-panel-num">3200</span>
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div :style="{width: '300px', height: '300px'}" id="myEcharts">图表</div>
     </el-col>
   </el-row>

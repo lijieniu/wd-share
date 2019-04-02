@@ -19,9 +19,15 @@
 }
 .header .top-left-bar-show {
   width: 230px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .header .top-left-bar-hidden {
   width: 60px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .header .right {
@@ -60,4 +66,14 @@
 
 .menu {
   border-right: none;
+}
+.top-left-bar-logo-container {
+  display: inline-block;
+}
+.top-left-bar-logo {
+  width: 30px;
+  height: 30px;
+}
+.top-left-bar-sitename {
+  margin-left: 10px;
 }

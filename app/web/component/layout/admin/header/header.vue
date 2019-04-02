@@ -2,7 +2,8 @@
   <div style="height:100%">
      <header class="header">
       <div class="top-left-bar" :class="{ 'top-left-bar-hidden': collapse, 'top-left-bar-show': !collapse }">
-          <span>{{ collapse ? site.name : site.description }}</span>
+        <img class="top-left-bar-logo" src="https://s3.wandougongzhu.cn/s/76/logo_f4ff9b.png">
+        <span v-if="!collapse" class="top-left-bar-sitename">{{ collapse ? site.name : site.description }}</span>
       </div>
       <span class="header-btn" @click="sidebarToggle"><i class="el-icon-menu"></i></span>
       <div class="right">
@@ -28,7 +29,7 @@
         </span>
         <el-dropdown>
           <span class="header-btn">
-              Admin<i class="el-icon-arrow-down el-icon--right"></i>
+              {{userInfo.username}}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>{{$t('header.profile')}}</el-dropdown-item>
@@ -52,9 +53,10 @@ export default {
     return {
       collapse: false,
       site: {
-        name: "Admin",
-        description: "豌豆分享"
-      }
+        name: "豌豆技术分享",
+        description: "豌豆技术分享"
+      },
+      userInfo: {}
     };
   },
   computed: {},
@@ -70,13 +72,15 @@ export default {
       }
     },
     logout() {
-      window.location.replace("/login");
+      sessionStorage.setItem('userInfo', '');
+      window.location.replace("/admin/login");
     },
     switchLang(lang) {
       window.location.href = `/admin?locale=${lang}`;
     }
   },
   mounted: function() {
+    this.userInfo = sessionStorage.getItem('userInfo') !== '' ? JSON.parse(sessionStorage.getItem('userInfo')) : {};
     if (!this.collapse) {
       document.body.classList.remove("sidebar-hidden");
     } else {

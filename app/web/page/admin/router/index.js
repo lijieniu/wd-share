@@ -3,6 +3,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Dashboard from '../view/dashboard/index.vue';
 import ArticleList from '../view/article/list.vue';
+import LoginPage from '../login.vue';
 
 Vue.use(VueRouter);
 
@@ -14,6 +15,10 @@ export default function createRouter() {
       {
         path: '/',
         component: Dashboard
+      },
+      {
+        path: '/login',
+        component: LoginPage
       },
       {
         path: '/user',
