@@ -86,18 +86,18 @@
             </div>
         </div>
       <el-dialog title="新建分享" :visible.sync="isShowNewShareDilog">
-        <el-form :model="newShareInfo" label-width="80px">
+        <el-form :model="newTopicInfo" label-width="80px">
           <el-form-item label="主题">
-            <el-input v-model="newShareInfo.title"></el-input>
+            <el-input v-model="newTopicInfo.title"></el-input>
           </el-form-item>
           <el-form-item label="描述">
-            <el-input v-model="newShareInfo.desc"></el-input>
+            <el-input v-model="newTopicInfo.desc"></el-input>
           </el-form-item>
           <el-form-item label="分享时间">
-            <el-input v-model="newShareInfo.share_time"></el-input>
+            <el-input v-model="newTopicInfo.share_time"></el-input>
           </el-form-item>
           <el-form-item label="地点">
-            <el-input v-model="newShareInfo.share_position"></el-input>
+            <el-input v-model="newTopicInfo.share_position"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -126,7 +126,7 @@ export default {
       //批量选择数组
       batchSelectArray: [],
       isShowNewShareDilog: false,
-      newShareInfo: {},
+      newTopicInfo: {},
       formStyle: {
         formlableWidth: '120px',
         formInputWidth: '300px'
@@ -135,7 +135,7 @@ export default {
   },
   methods: {
     saveNewShare() {
-      console.log(this.newShareInfo);
+      console.log(this.newTopicInfo);
       this.isShowNewShareDilog = false;
     },
     fetchApi({ $store, $router }, json) {
