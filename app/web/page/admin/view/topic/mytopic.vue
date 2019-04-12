@@ -5,20 +5,12 @@
             <el-row class="clear">
                 <label> 姓名:</label><el-input class="search-input" clearable v-model="q.username" placeholder="姓名"></el-input>
                 <label> 标题:</label><el-input class="search-input" clearable v-model="q.title" placeholder="标题"></el-input>
-                <label> 状态:</label>
-                <el-select  v-model="q.status" placeholder="状态">
-                  <el-option v-for="item in status"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.status">
-                  </el-option>
-                </el-select>
                 <el-button class="search-button" type="primary" @click="query()">查询</el-button>
               <el-button @click="isShowNewShareDilog = true" class="new-share" type="success">新增分享<i class="el-icon-circle-plus-outline"></i></el-button>
             </el-row>
         </div>
         <el-table
-                :data="shareList"
+                :data="topicList"
                 v-loading="loading"
                 element-loading-text="拼命加载中"
                 border
@@ -116,7 +108,7 @@
     </div>
 </template>
 <script type="babel">
-import { SET_SHARE_LIST } from '../../store/mutation-type';
+import { SET_TOPIC_LIST } from '../../store/mutation-type';
 export default {
   components: {},
   data() {
@@ -147,16 +139,10 @@ export default {
       this.isShowNewShareDilog = false;
     },
     fetchApi({ $store, $router }, json) {
-      return $store.dispatch(SET_SHARE_LIST, json);
+      return $store.dispatch(SET_TOPIC_LIST, json);
     },
     query() {
       this.fetchApi(this, this.q);
-    },
-    write() {
-      this.$router.push("/article/add");
-    },
-    handleSelectionChange(val) {
-      console.log("handleSelectionChange", val);
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
@@ -167,9 +153,6 @@ export default {
       console.log(`当前页: ${val}`);
       this.q.pageIndex = val;
       this.fetchApi(this, this.q);
-    },
-    handleEdit(index, row) {
-      this.$message(`你点击了编辑操作 index:${index}, id:${row.id}`);
     },
     handleDelete(index, row) {
       this.$store.dispatch(DELETE_ARTICLE, { id: row.id });
@@ -193,26 +176,11 @@ export default {
     }
   },
   computed: {
-    status() {
-      return [
-        { status: undefined, name: "--请选择--" },
-        { status: 1, name: "已发布" },
-        { status: 2, name: "草稿" }
-      ];
-    },
-    categories() {
-      return [
-        { categoryId: 0, name: "--请选择--" },
-        { categoryId: 1, name: "Nodejs" },
-        { categoryId: 2, name: "Webpack" },
-        { categoryId: 3, name: "Egg" }
-      ];
-    },
     total() {
       return this.$store.state.shareTotal;
     },
-    shareList() {
-      return this.$store.state.shareList;
+    topicList() {
+      return this.$store.state.topicList;
     }
   }
 };

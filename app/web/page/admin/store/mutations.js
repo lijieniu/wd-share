@@ -6,7 +6,7 @@ import {
   SET_SAVE_ARTICLE,
   DELETE_ARTICLE,
   SET_USER_LIST,
-  SET_SHARE_LIST
+  SET_TOPIC_LIST
 } from './mutation-type';
 import { strictEqual } from 'assert';
 
@@ -31,9 +31,9 @@ const mutations = {
   [SET_USER_LIST](state, { list }) {
     state.userList = list;
   },
-  [SET_SHARE_LIST](state, { list, total }) {
-    state.shareList = list;
-    state.shareTotal = total;
+  [SET_TOPIC_LIST](state, { list, total }) {
+    state.topicList = list;
+    state.topicTotal = total;
   }
 };
 export default mutations;

@@ -1,6 +1,6 @@
 const Controller = require('egg').Controller;
 
-class ShareController extends Controller {
+class TopicController extends Controller {
     async index() {
         this.ctx.body = {
             list: [
@@ -17,4 +17,4 @@ class ShareController extends Controller {
         }
     }
 };
-module.exports = ShareController;
+module.exports = TopicController;
