@@ -8,5 +8,5 @@ export const DELETE_ARTICLE = 'DELETE_ARTICLE';
 // user
 export const SET_USER_LIST = 'SET_USER_LIST';
 
-// share
-export const SET_SHARE_LIST = 'SET_SHARE_LIST';
+// topic
+export const SET_TOPIC_LIST = 'SET_TOPIC_LIST';
