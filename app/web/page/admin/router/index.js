@@ -29,6 +29,10 @@ export default function createRouter() {
         component: () => import('../view/share/index.vue')
       },
       {
+        path: '/mine',
+        component: () => import('../view/share/myshare.vue')
+      },
+      {
         path: '/article/list',
         component: ArticleList
       },

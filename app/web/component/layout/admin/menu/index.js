@@ -14,6 +14,11 @@ const menu = {
     icon: 'el-icon-menu',
     path: '/share'
   },
+  myshare: {
+    name: 'menu.myshare',
+    icon: 'el-icon-menu',
+    path: '/mine'
+  },
   content: {
     name: 'menu.articlemanage',
     icon: 'el-icon-document',

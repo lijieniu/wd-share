@@ -3,7 +3,7 @@ export default {
     home: 'Home',
     usermanage: 'User Manage',
     sharemanage: 'Share Manage',
-    minemanage: 'My Share',
+    myshare: 'My Share',
     articlemanage: 'Article Manage',
     articlequery: 'Article Query',
     articleadd: 'Article Add',
