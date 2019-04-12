@@ -5,15 +5,16 @@
             <el-row class="clear">
                 <label> 姓名:</label><el-input class="search-input" clearable v-model="q.username" placeholder="姓名"></el-input>
                 <label> 标题:</label><el-input class="search-input" clearable v-model="q.title" placeholder="标题"></el-input>
-                <label> 状态:</label><el-select  v-model="q.status" placeholder="状态">
-                <el-option v-for="item in status"
-                           :key="item.id"
-                           :label="item.name"
-                           :value="item.status">
-                </el-option>
-            </el-select>
+                <label> 状态:</label>
+                <el-select  v-model="q.status" placeholder="状态">
+                  <el-option v-for="item in status"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.status">
+                  </el-option>
+                </el-select>
                 <el-button class="search-button" type="primary" @click="query()">查询</el-button>
-              <el-button class="new-share" type="success">新增分享<i class="el-icon-circle-plus-outline"></i></el-button>
+              <el-button @click="isShowNewShareDilog = true" class="new-share" type="success">新增分享<i class="el-icon-circle-plus-outline"></i></el-button>
             </el-row>
         </div>
         <el-table
@@ -92,6 +93,26 @@
                 </el-pagination>
             </div>
         </div>
+      <el-dialog title="新建分享" :visible.sync="isShowNewShareDilog">
+        <el-form :model="newShareInfo" label-width="80px">
+          <el-form-item label="主题">
+            <el-input v-model="newShareInfo.title"></el-input>
+          </el-form-item>
+          <el-form-item label="描述">
+            <el-input v-model="newShareInfo.desc"></el-input>
+          </el-form-item>
+          <el-form-item label="分享时间">
+            <el-input v-model="newShareInfo.share_time"></el-input>
+          </el-form-item>
+          <el-form-item label="地点">
+            <el-input v-model="newShareInfo.share_position"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="isShowNewShareDilog = false">取 消</el-button>
+          <el-button type="primary" @click="saveNewShare">确 定</el-button>
+        </div>
+      </el-dialog>
     </div>
 </template>
 <script type="babel">
@@ -111,10 +132,20 @@ export default {
       //请求时的loading效果
       loading: false,
       //批量选择数组
-      batchSelectArray: []
+      batchSelectArray: [],
+      isShowNewShareDilog: false,
+      newShareInfo: {},
+      formStyle: {
+        formlableWidth: '120px',
+        formInputWidth: '300px'
+      }
     };
   },
   methods: {
+    saveNewShare() {
+      console.log(this.newShareInfo);
+      this.isShowNewShareDilog = false;
+    },
     fetchApi({ $store, $router }, json) {
       return $store.dispatch(SET_SHARE_LIST, json);
     },
