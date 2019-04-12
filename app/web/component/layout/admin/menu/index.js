@@ -9,13 +9,13 @@ const menu = {
     icon: 'el-icon-menu',
     path: '/user'
   },
-  share: {
-    name: 'menu.sharemanage',
+  topic: {
+    name: 'menu.topicmanage',
     icon: 'el-icon-menu',
-    path: '/share'
+    path: '/topic'
   },
-  myshare: {
-    name: 'menu.myshare',
+  mytopic: {
+    name: 'menu.mytopic',
     icon: 'el-icon-menu',
     path: '/mine'
   },

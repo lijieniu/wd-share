@@ -2,8 +2,8 @@ export default {
   menu: {
     home: 'Home',
     usermanage: 'User Manage',
-    sharemanage: 'Share Manage',
-    myshare: 'My Share',
+    topicmanage: 'Topic Manage',
+    mytopic: 'My Topic',
     articlemanage: 'Article Manage',
     articlequery: 'Article Query',
     articleadd: 'Article Add',

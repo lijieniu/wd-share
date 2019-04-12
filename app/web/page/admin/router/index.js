@@ -25,12 +25,12 @@ export default function createRouter() {
         component: () => import('../view/user/index.vue')
       },
       {
-        path: '/share',
-        component: () => import('../view/share/index.vue')
+        path: '/topic',
+        component: () => import('../view/topic/index.vue')
       },
       {
         path: '/mine',
-        component: () => import('../view/share/myshare.vue')
+        component: () => import('../view/topic/mytopic.vue')
       },
       {
         path: '/article/list',
