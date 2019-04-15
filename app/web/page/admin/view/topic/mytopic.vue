@@ -14,11 +14,16 @@
                 v-loading="loading"
                 element-loading-text="拼命加载中"
                 border
+                stirpe
                 @selection-change="batchSelect"
-                style="width: 100%;">
+                style="width: 100%;"
+                :default-sort="{prop: 'create_time', order: 'descending'}">
             <el-table-column
                     type="selection"
                     width="55">
+            </el-table-column>
+            <el-table-column
+              type="index">
             </el-table-column>
             <el-table-column
                     prop="topic_username"
@@ -26,9 +31,11 @@
                     width="100">
             </el-table-column>
             <el-table-column
-                    prop="department"
                     label="部门"
                     width="200">
+                    <template slot-scope="scope">
+                      <span>技术部</span>
+                    </template>
             </el-table-column>
             <el-table-column
                     prop="title"
@@ -39,6 +46,12 @@
                     prop="desc"
                     label="简介"
                     width="200">
+            </el-table-column>
+            <el-table-column
+              prop="create_time"
+              label="创建时间"
+              :formatter="formatDate"
+              width="200">
             </el-table-column>
             <el-table-column
                     prop="topic_time"
@@ -109,6 +122,7 @@
 </template>
 <script type="babel">
 import { SET_TOPIC_LIST, SET_SAVE_TOPIC } from '../../store/mutation-type';
+import moment from 'moment';
 export default {
   components: {},
   data() {
@@ -136,6 +150,7 @@ export default {
   methods: {
     saveNewShare() {
       console.log(this.newTopicInfo);
+      this.newTopicInfo.topic_username = window.userInfo.username;
       this.isShowNewShareDilog = false;
       this.$store.dispatch(SET_SAVE_TOPIC, this.newTopicInfo);
     },
@@ -174,6 +189,9 @@ export default {
         this.$message.success(msg);
         this.loading = false;
       });
+    },
+    formatDate(row) {
+      return moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
     }
   },
   computed: {
@@ -187,8 +205,5 @@ export default {
 };
 </script>
 <style>
-  .new-share {
-    float: right;
-  }
 </style>
 

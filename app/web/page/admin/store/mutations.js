@@ -38,7 +38,7 @@ const mutations = {
   },
   [SET_SAVE_TOPIC](state, data) {
     state.topicTotal += 1;
-    state.topicList = [data].concat(state.topicList);
+    state.topicList = state.topicList.concat([data]);
   }
 };
 export default mutations;

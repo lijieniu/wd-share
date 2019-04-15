@@ -31,7 +31,6 @@ export default {
     if(this.$route.path === '/login') {
       this.isLogin = true;
     } else {
-      console.log(sessionStorage.getItem('userInfo'));
       if(sessionStorage.getItem('userInfo') === '') {
         location.href = '/admin/login';
       } else {

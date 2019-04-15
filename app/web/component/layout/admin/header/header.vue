@@ -65,14 +65,17 @@ export default {
       e.preventDefault();
       if (this.collapse) {
         document.body.classList.remove("sidebar-hidden");
+        document.getElementsByClassName('main-content')[0].classList.remove('main-container-sliderbar-hidden');
         this.collapse = false;
       } else {
         document.body.classList.add("sidebar-hidden");
+        document.getElementsByClassName('main-content')[0].classList.add('main-container-sliderbar-hidden');
         this.collapse = true;
       }
     },
     logout() {
       sessionStorage.setItem('userInfo', '');
+      window.userInfo = '';
       window.location.replace("/admin/login");
     },
     switchLang(lang) {
@@ -81,6 +84,7 @@ export default {
   },
   mounted: function() {
     this.userInfo = sessionStorage.getItem('userInfo') !== '' ? JSON.parse(sessionStorage.getItem('userInfo')) : {};
+    window.userInfo = this.userInfo;
     if (!this.collapse) {
       document.body.classList.remove("sidebar-hidden");
     } else {
