@@ -25,4 +25,8 @@ module.exports = class MySQLDB extends Base {
         let result = await this.db.select(name);
         return result;
     }
+    async delete(name, field) {
+        let result = await this.db.delete(name, field);
+        return result;
+    }
 };

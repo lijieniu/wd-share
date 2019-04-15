@@ -10,5 +10,9 @@ export default {
   },
   get(url) {
     return axios.get(url);
+  },
+  delete(url, json) {
+    console.log(json);
+    return axios.delete(url, json);
   }
 };

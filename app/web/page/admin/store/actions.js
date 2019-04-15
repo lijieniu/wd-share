@@ -49,6 +49,11 @@ const actions = {
     return request.post('/admin/api/topic', json, store).then(response => {
       store.commit(Type.SET_SAVE_TOPIC, json);
     });
+  },
+  DELETE_TOPIC: (store, { id }) => {
+    return request.delete(`/admin/api/topic/${id}`, store).then(response => {
+      store.commit(Type.DELETE_TOPIC, { id });
+    });
   }
 };
 

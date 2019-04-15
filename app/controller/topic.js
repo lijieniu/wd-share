@@ -15,5 +15,12 @@ class TopicController extends Controller {
         let saveResult = await ctx.service.topic.saveTopic(topicInfo);
         this.ctx.body = saveResult;
     }
+
+    async destroy() {
+        let { ctx } = this;
+        let topicId = ctx.params.id;
+        let deleteResult = await ctx.service.topic.deleteTopic({id: topicId});
+        this.ctx.body = deleteResult;
+    }
 };
 module.exports = TopicController;

@@ -121,7 +121,7 @@
     </div>
 </template>
 <script type="babel">
-import { SET_TOPIC_LIST, SET_SAVE_TOPIC } from '../../store/mutation-type';
+import { SET_TOPIC_LIST, SET_SAVE_TOPIC, DELETE_TOPIC } from '../../store/mutation-type';
 import moment from 'moment';
 export default {
   components: {},
@@ -171,8 +171,17 @@ export default {
       this.fetchApi(this, this.q);
     },
     handleDelete(index, row) {
-      this.$store.dispatch(DELETE_ARTICLE, { id: row.id });
-      this.$message(`删除[${row.title}]成功!`);
+      this.$confirm('确定要删除吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$store.dispatch(DELETE_TOPIC, { id: row.id });
+        this.$message({
+          message: '删除成功！',
+          type: 'success'
+        });
+      });
     },
     //批量选择
     batchSelect(val) {
@@ -191,7 +200,7 @@ export default {
       });
     },
     formatDate(row) {
-      return moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+      return moment(row.create_time).format('YYYY-MM-DD HH:mm:ss');
     }
   },
   computed: {

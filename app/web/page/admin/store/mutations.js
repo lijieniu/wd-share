@@ -7,7 +7,8 @@ import {
   DELETE_ARTICLE,
   SET_USER_LIST,
   SET_TOPIC_LIST,
-  SET_SAVE_TOPIC
+  SET_SAVE_TOPIC,
+  DELETE_TOPIC
 } from './mutation-type';
 import { strictEqual } from 'assert';
 
@@ -39,6 +40,12 @@ const mutations = {
   [SET_SAVE_TOPIC](state, data) {
     state.topicTotal += 1;
     state.topicList = state.topicList.concat([data]);
+  },
+  [DELETE_TOPIC](state, {id}) {
+    state.topicTotal -= 1;
+    state.topicList = state.topicList.filter(item => {
+      return item.id !== id;
+    });
   }
 };
 export default mutations;

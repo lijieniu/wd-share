@@ -15,6 +15,9 @@ class TopicService extends Service {
     let result = await this.collection.get();
     return result;
   }
+  async deleteTopic(field) {
+    let result = await this.collection.delete(field);
+  }
 }
 
 module.exports = TopicService;
