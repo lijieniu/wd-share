@@ -35,17 +35,17 @@ module.exports = app => {
     match: /^\/admin\/api/
   }
 
-//   exports.mysql = {
-//     client: {
-//       host: '127.0.0.1',
-//       port: '3306',
-//       user: 'root',
-//       password: '',
-//       database: ''
-//     },
-//     app: true,
-//     agent: false
-//   };
+  exports.mysql = {
+    client: {
+      host: '127.0.0.1',
+      port: '3306',
+      user: 'root',
+      password: 'Niuniubang1',
+      database: 'wd_topic'
+    },
+    app: true,
+    agent: false
+  };
 
   exports.security = {
     csrf: {

@@ -2,19 +2,18 @@ const Controller = require('egg').Controller;
 
 class TopicController extends Controller {
     async index() {
+        let topicList = await this.ctx.service.topic.getTopicList();
         this.ctx.body = {
-            list: [
-                {
-                    username: 'niu',
-                    department: '前端',
-                    title: '优雅的标题',
-                    desc: '这里教你怎样优雅的分享',
-                    share_time: '2019-01-19 17:00:00',
-                    room: '大会议室'
-                }
-            ],
-            total: 1
+            list: topicList,
+            total: 10
         }
+    }
+
+    async create() {
+        let { ctx } = this;
+        let topicInfo = ctx.request.body;
+        let saveResult = await ctx.service.topic.saveTopic(topicInfo);
+        this.ctx.body = saveResult;
     }
 };
 module.exports = TopicController;

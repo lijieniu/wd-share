@@ -21,7 +21,7 @@
                     width="55">
             </el-table-column>
             <el-table-column
-                    prop="username"
+                    prop="topic_username"
                     label="姓名"
                     width="100">
             </el-table-column>
@@ -41,12 +41,12 @@
                     width="200">
             </el-table-column>
             <el-table-column
-                    prop="share_time"
+                    prop="topic_time"
                     label="分享时间"
                     width="200">
             </el-table-column>
             <el-table-column
-                    prop="room"
+                    prop="topic_position"
                     label="地点"
                     width="200">
             </el-table-column>
@@ -94,10 +94,10 @@
             <el-input v-model="newTopicInfo.desc"></el-input>
           </el-form-item>
           <el-form-item label="分享时间">
-            <el-input v-model="newTopicInfo.share_time"></el-input>
+            <el-input v-model="newTopicInfo.topic_time"></el-input>
           </el-form-item>
           <el-form-item label="地点">
-            <el-input v-model="newTopicInfo.share_position"></el-input>
+            <el-input v-model="newTopicInfo.topic_position"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -108,7 +108,7 @@
     </div>
 </template>
 <script type="babel">
-import { SET_TOPIC_LIST } from '../../store/mutation-type';
+import { SET_TOPIC_LIST, SET_SAVE_TOPIC } from '../../store/mutation-type';
 export default {
   components: {},
   data() {
@@ -137,6 +137,7 @@ export default {
     saveNewShare() {
       console.log(this.newTopicInfo);
       this.isShowNewShareDilog = false;
+      this.$store.dispatch(SET_SAVE_TOPIC, this.newTopicInfo);
     },
     fetchApi({ $store, $router }, json) {
       return $store.dispatch(SET_TOPIC_LIST, json);

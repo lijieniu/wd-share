@@ -47,12 +47,12 @@
                     width="200">
             </el-table-column>
             <el-table-column
-                    prop="share_time"
+                    prop="topic_time"
                     label="分享时间"
                     width="200">
             </el-table-column>
             <el-table-column
-                    prop="room"
+                    prop="topic_position"
                     label="地点"
                     width="200">
             </el-table-column>

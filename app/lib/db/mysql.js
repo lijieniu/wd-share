@@ -21,4 +21,8 @@ module.exports = class MySQLDB extends Base {
         let result = await this.db.update(name, entity, {where: where});
         return result.affectedRows === 1;
     }
+    async get(name) {
+        let result = await this.db.select(name);
+        return result;
+    }
 };

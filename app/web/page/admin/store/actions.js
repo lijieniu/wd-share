@@ -44,6 +44,11 @@ const actions = {
     return request.get('/admin/api/topic').then(response => {
       store.commit(Type.SET_TOPIC_LIST, response.data.data);
     });
+  },
+  SET_SAVE_TOPIC: (store, json) => {
+    return request.post('/admin/api/topic', json, store).then(response => {
+      store.commit(Type.SET_SAVE_TOPIC, json);
+    });
   }
 };
 
