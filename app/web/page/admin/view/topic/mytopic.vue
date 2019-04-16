@@ -23,6 +23,7 @@
                     width="55">
             </el-table-column>
             <el-table-column
+              fixed
               type="index">
             </el-table-column>
             <el-table-column
@@ -64,6 +65,7 @@
                     width="200">
             </el-table-column>
             <el-table-column
+                    fixed="right"
                     label="操作"
                     width="180">
                 <template slot-scope="props">
