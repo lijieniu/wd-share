@@ -3,10 +3,10 @@
         <p>我的分享</p>
         <div class="search">
             <el-row class="clear">
-                <label> 姓名:</label><el-input class="search-input" clearable v-model="q.username" placeholder="姓名"></el-input>
+                <label> 姓名:</label><el-input class="search-input" clearable v-model="q.topic_username" placeholder="姓名"></el-input>
                 <label> 标题:</label><el-input class="search-input" clearable v-model="q.title" placeholder="标题"></el-input>
                 <el-button class="search-button" type="primary" @click="query()">查询</el-button>
-              <el-button @click="isShowNewShareDilog = true" class="new-share" type="success">新增分享<i class="el-icon-circle-plus-outline"></i></el-button>
+              <el-button @click="addTopic" class="new-share" type="success">新增分享<i class="el-icon-circle-plus-outline"></i></el-button>
             </el-row>
         </div>
         <el-table
@@ -100,7 +100,7 @@
                 </el-pagination>
             </div>
         </div>
-      <el-dialog title="新建分享" :visible.sync="isShowNewShareDilog">
+      <el-dialog :title="dialogTitle" :visible.sync="isShowNewShareDilog">
         <el-form :model="newTopicInfo" label-width="80px">
           <el-form-item label="主题">
             <el-input v-model="newTopicInfo.title"></el-input>
@@ -131,7 +131,7 @@ export default {
     return {
       q: {
         title: undefined,
-        username: '',
+        topic_username: undefined,
         pageIndex: 1,
         pageSize: 10
       },
@@ -146,9 +146,14 @@ export default {
         formInputWidth: '300px'
       },
       currentIndex: 0,
+      dialogTitle: '新建分享'
     };
   },
   methods: {
+    addTopic() {
+      this.dialogTitle = '新建分享';
+      this.isShowNewShareDilog = true;
+    },
     saveNewShare() {
       this.newTopicInfo.topic_username = window.userInfo.username ? window.userInfo.username : 'admin';
       this.isShowNewShareDilog = false;
@@ -160,11 +165,18 @@ export default {
         message: '修改成功！',
         type: 'success'
       });
+      this.newTopicInfo = {}
     },
     fetchApi({ $store, $router }, json) {
       return $store.dispatch(SET_TOPIC_LIST, json);
     },
     query() {
+      let realQuery = {}
+      Object.keys(this.q).map(item => {
+        if(this.q[item] && this.q[item] !== '') {
+          realQuery[item] = this.q[item];
+        }
+      });
       this.fetchApi(this, this.q);
     },
     handleSizeChange(val) {
@@ -191,6 +203,7 @@ export default {
       });
     },
     handleEdit(index, row) {
+      this.dialogTitle = '修改分享';
       this.newTopicInfo = Object.assign({}, row);
       this.currentIndex = index;
       this.isShowNewShareDilog = true;

@@ -2,7 +2,8 @@ const Controller = require('egg').Controller;
 
 class TopicController extends Controller {
     async index() {
-        let topicList = await this.ctx.service.topic.getTopicList();
+        let query = this.ctx.query;
+        let topicList = await this.ctx.service.topic.getTopicList(query);
         this.ctx.body = {
             list: topicList,
             total: 10

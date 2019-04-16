@@ -8,11 +8,10 @@ export default {
   post(url, json) {
     return axios.post(url, json);
   },
-  get(url) {
-    return axios.get(url);
+  get(url, json) {
+    return axios.get(url, {params: json});
   },
   delete(url, json) {
-    console.log(json);
     return axios.delete(url, json);
   }
 };

@@ -1,5 +1,6 @@
 const Service = require('egg').Service;
 const Collection = require('../lib/db/collection');
+const Query = require('../lib/db/query');
 const moment = require('moment');
 
 class TopicService extends Service {
@@ -20,8 +21,16 @@ class TopicService extends Service {
     }
     return result;
   }
-  async getTopicList() {
-    let result = await this.collection.get();
+  async getTopicList(json) {
+    let { topic_username, title, pageSize, pageIndex } = json;
+    let query = new Query();
+    query.orderByField = 'id';
+    query.orderBy = 'desc';
+    query.like.title = title;
+    query.like.topic_username = topic_username;
+    query.pageSize = pageSize;
+    query.pageIndex = pageIndex;
+    let result = await this.collection.getPager(query);
     return result;
   }
   async deleteTopic(field) {

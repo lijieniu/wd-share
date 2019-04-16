@@ -6,7 +6,24 @@ module.exports = class MySQLDB extends Base {
         this.db = db;
     }
     async getPager(name, query) {
-        let result = await this.db.select(name);
+        // console.log(query);
+        // let result = await this.db.select(name);
+        console.log(query);
+        let sql = `select * from ${name}`;
+        if(Object.keys(query.like).length > 0) {
+            sql += ` where `;
+            Object.keys(query.like).forEach((item, index) => {
+                sql += `${item} like '%${query.like[item]}%'`;
+                if(index !== (Object.keys(query.like).length - 1)) {
+                    sql += ' and ';
+                }
+            });
+        }
+        sql += ` order by ${query.orderByField} ${query.orderBy}`;
+        sql += ` limit ${(query._pageIndex - 1) * query._pageSize}, ${query._pageSize}`;
+        console.log(sql);
+        
+        let result = await this.db.query(sql);
         return result;
     }
     async add(name, entity) {
