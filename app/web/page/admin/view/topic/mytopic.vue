@@ -130,8 +130,6 @@ export default {
       q: {
         title: undefined,
         username: '',
-        categoryId: undefined,
-        statusId: undefined,
         pageIndex: 1,
         pageSize: 10
       },
@@ -144,15 +142,22 @@ export default {
       formStyle: {
         formlableWidth: '120px',
         formInputWidth: '300px'
-      }
+      },
+      currentIndex: 0,
     };
   },
   methods: {
     saveNewShare() {
-      console.log(this.newTopicInfo);
-      this.newTopicInfo.topic_username = window.userInfo.username;
+      this.newTopicInfo.topic_username = window.userInfo.username ? window.userInfo.username : 'admin';
       this.isShowNewShareDilog = false;
+      if(this.newTopicInfo.id) {
+        this.topicList.splice(this.topicList.length - 1 - this.currentIndex, 1, this.newTopicInfo);
+      }
       this.$store.dispatch(SET_SAVE_TOPIC, this.newTopicInfo);
+      this.$message({
+        message: '修改成功！',
+        type: 'success'
+      });
     },
     fetchApi({ $store, $router }, json) {
       return $store.dispatch(SET_TOPIC_LIST, json);
@@ -182,6 +187,11 @@ export default {
           type: 'success'
         });
       });
+    },
+    handleEdit(index, row) {
+      this.newTopicInfo = Object.assign({}, row);
+      this.currentIndex = index;
+      this.isShowNewShareDilog = true;
     },
     //批量选择
     batchSelect(val) {

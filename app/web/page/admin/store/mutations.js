@@ -38,8 +38,10 @@ const mutations = {
     state.topicTotal = total;
   },
   [SET_SAVE_TOPIC](state, data) {
-    state.topicTotal += 1;
-    state.topicList = state.topicList.concat([data]);
+    if(!data.id) { // 新增
+      state.topicTotal += 1;
+      state.topicList = state.topicList.concat([data]);
+    }
   },
   [DELETE_TOPIC](state, {id}) {
     state.topicTotal -= 1;
