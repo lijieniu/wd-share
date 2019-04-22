@@ -39,7 +39,6 @@ module.exports = class AdminController extends egg.Controller {
       username,
       password,
     }
-    console.log(form_params);
     // ldap验证
     await new Promise((resolve, reject) => {
       request.post({
