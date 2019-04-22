@@ -11,4 +11,5 @@ module.exports = app => {
   router.get('/admin/qrcode', controller.admin.qrcode);
   router.get('/admin(/.+)?', controller.admin.home);
   router.post('/admin/api/login', controller.admin.login);
+  router.get('/admin/api/logout', controller.admin.logout);
 };

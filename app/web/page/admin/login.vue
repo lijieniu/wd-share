@@ -8,7 +8,7 @@
             <el-form-item label="密码" prop="password">
                 <el-input type="password" size="medium" v-model="userInfo.password"></el-input>
             </el-form-item>
-            <el-button type="success" class="login" @click="login('userInfoForm')">登录</el-button>
+            <el-button type="success" class="login" @click="login('userInfoForm')" :loading="logining">登录</el-button>
         </el-form>
     </div>
 </template>
@@ -34,27 +34,27 @@ export default {
                         trigger: 'blur'
                     }
                 ]
-            }
+            },
+            logining: false
         }
     },
     methods: {
         login(formName) {
+            this.logining = true;
             let _this = this;
             this.$refs[formName].validate(valid => {
                 if(valid) {
                     this.$axios.post('/admin/api/login', {username: this.userInfo.username, password: this.userInfo.password}).then(res => {
-                        console.log(res.data.data);
+                        _this.logining = false;
                         if(res.data.data.errno === 0) {
                             sessionStorage.setItem('userInfo', JSON.stringify(this.userInfo));
                             location.href = '/';
                         } else {
-                            _this.$message({
-                                type: 'success',
-                                message: res.data.data
-                            });
+                            _this.$message.error(res.data.data);
                         }
                     });
                 } else {
+                    this.logining = false;
                     return false;
                 }
             });

@@ -7,6 +7,11 @@ const request = require('request');
 module.exports = class AdminController extends egg.Controller {
   async home(ctx) {
     const url = ctx.url.replace(/\/admin/, '');
+    // ctx.redirect('/admin/login');
+    console.log(ctx.url);
+    if(!ctx.session.userInfo && ctx.url !== '/admin/login') {
+      ctx.redirect('/admin/login');
+    }
     await ctx.renderClient('admin.js', { ctx, url });
   }
   async list(ctx) {
@@ -56,10 +61,14 @@ module.exports = class AdminController extends egg.Controller {
       });
     }).then(res => {
       if(!res.errno) {
+        ctx.session.userInfo = form_params;
         ctx.body = res;
       } else {
         ctx.body = res.errmsg;
       }
     });
+  }
+  async logout(ctx) {
+    ctx.session.userInfo = null;
   }
 };

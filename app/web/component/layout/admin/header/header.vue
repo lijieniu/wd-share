@@ -74,9 +74,14 @@ export default {
       }
     },
     logout() {
-      sessionStorage.setItem('userInfo', '');
-      window.userInfo = '';
-      window.location.replace("/admin/login");
+      this.$axios.get('/admin/api/logout').then(res => {
+        if(!res.data.code) {
+          sessionStorage.setItem('userInfo', '');
+          window.userInfo = '';
+          window.location.replace("/admin/login");
+        }
+      });
+      
     },
     switchLang(lang) {
       window.location.href = `/admin?locale=${lang}`;
