@@ -14,7 +14,6 @@
                 v-loading="loading"
                 element-loading-text="拼命加载中"
                 border
-                stirpe
                 @selection-change="batchSelect"
                 style="width: 100%;"
                 :default-sort="{prop: 'create_time', order: 'descending'}">
@@ -57,6 +56,7 @@
             <el-table-column
                     prop="topic_time"
                     label="分享时间"
+                    :formatter="formatDate"
                     width="200">
             </el-table-column>
             <el-table-column
@@ -109,7 +109,12 @@
             <el-input v-model="newTopicInfo.desc"></el-input>
           </el-form-item>
           <el-form-item label="分享时间">
-            <el-input v-model="newTopicInfo.topic_time"></el-input>
+            <!-- <el-input v-model="newTopicInfo.topic_time"></el-input> -->
+            <el-date-picker
+              v-model="newTopicInfo.topic_time"
+              type="datetime"
+              format="yyyy-MM-dd HH:mm:ss"
+              placeholder="选择日期时间"></el-date-picker>
           </el-form-item>
           <el-form-item label="地点">
             <el-input v-model="newTopicInfo.topic_position"></el-input>
