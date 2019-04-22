@@ -41,8 +41,11 @@ export default {
         login(formName) {
             this.$refs[formName].validate(valid => {
                 if(valid) {
-                    sessionStorage.setItem('userInfo', JSON.stringify(this.userInfo));
-                    location.href = '/';
+                    this.$axios.post('/admin/api/login', {username: 'niu', password: '123'}).then(res => {
+                        console.log(res);
+                    });
+                    // sessionStorage.setItem('userInfo', JSON.stringify(this.userInfo));
+                    // location.href = '/';
                 } else {
                     return false;
                 }

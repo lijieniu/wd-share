@@ -6,6 +6,7 @@ import Vuex from 'vuex';
 import request from 'framework/network/request';
 
 Vue.use(Vuex);
+Vue.prototype.$axios = request;
 
 const actions = {
 
