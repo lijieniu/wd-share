@@ -39,13 +39,21 @@ export default {
     },
     methods: {
         login(formName) {
+            let _this = this;
             this.$refs[formName].validate(valid => {
                 if(valid) {
-                    this.$axios.post('/admin/api/login', {username: 'niu', password: '123'}).then(res => {
-                        console.log(res);
+                    this.$axios.post('/admin/api/login', {username: this.userInfo.username, password: this.userInfo.password}).then(res => {
+                        console.log(res.data.data);
+                        if(res.data.data.errno === 0) {
+                            sessionStorage.setItem('userInfo', JSON.stringify(this.userInfo));
+                            location.href = '/';
+                        } else {
+                            _this.$message({
+                                type: 'success',
+                                message: res.data.data
+                            });
+                        }
                     });
-                    // sessionStorage.setItem('userInfo', JSON.stringify(this.userInfo));
-                    // location.href = '/';
                 } else {
                     return false;
                 }

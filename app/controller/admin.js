@@ -34,16 +34,33 @@ module.exports = class AdminController extends egg.Controller {
     // client.bind('uid=supbind, cn=users, dc=tiger, dc=com', '111111', function(err, res) {
     //   console.log(res);
     // });
+    let {username, password} = ctx.request.body;
     let form_params = {
-      username: 'niulijie',
-      password: 'niulijie',
+      username,
+      password,
     }
-    let result = await request.post({
-      url: 'https://service.inagora.org:50433/auth/check',
-      strictSSL: false,
-      formData: form_params,
-    }, (err, res, body) => {
-      console.log(body);
+    console.log(form_params);
+    // ldap验证
+    await new Promise((resolve, reject) => {
+      request.post({
+        url: 'https://service.inagora.org:50433/auth/check',
+        strictSSL: false,
+        formData: form_params,
+        json: true
+      }, (err, res, body) => {
+        console.log(body);
+        if(body) {
+          resolve(body);
+        } else {
+          reject(err);
+        }
+      });
+    }).then(res => {
+      if(!res.errno) {
+        ctx.body = res;
+      } else {
+        ctx.body = res.errmsg;
+      }
     });
   }
 };
