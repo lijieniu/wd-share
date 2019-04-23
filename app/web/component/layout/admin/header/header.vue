@@ -88,7 +88,7 @@ export default {
     }
   },
   mounted: function() {
-    this.userInfo = sessionStorage.getItem('userInfo') !== '' ? JSON.parse(sessionStorage.getItem('userInfo')) : {};
+    this.userInfo = window.__INITIAL_STATE__.userInfo;
     window.userInfo = this.userInfo;
     if (!this.collapse) {
       document.body.classList.remove("sidebar-hidden");

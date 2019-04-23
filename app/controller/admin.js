@@ -7,12 +7,11 @@ const request = require('request');
 module.exports = class AdminController extends egg.Controller {
   async home(ctx) {
     const url = ctx.url.replace(/\/admin/, '');
-    // ctx.redirect('/admin/login');
-    console.log(ctx.url);
+    
     if(!ctx.session.userInfo && ctx.url !== '/admin/login') {
       ctx.redirect('/admin/login');
     }
-    await ctx.renderClient('admin.js', { ctx, url });
+    await ctx.renderClient('admin.js', { ctx, url, userInfo: ctx.session.userInfo });
   }
   async list(ctx) {
     this.ctx.body = await ctx.service.article.getArtilceList(ctx.request.bdoy);
@@ -33,12 +32,6 @@ module.exports = class AdminController extends egg.Controller {
     this.ctx.body = img;
   }
   async login(ctx) {
-    // let ldapClient = ldap.createClient({
-    //   url: 'https://service.inagora.org:50433/auth/check'
-    // });
-    // client.bind('uid=supbind, cn=users, dc=tiger, dc=com', '111111', function(err, res) {
-    //   console.log(res);
-    // });
     let {username, password} = ctx.request.body;
     let form_params = {
       username,
@@ -61,6 +54,7 @@ module.exports = class AdminController extends egg.Controller {
       });
     }).then(res => {
       if(!res.errno) {
+        delete form_params.password;
         ctx.session.userInfo = form_params;
         ctx.body = res;
       } else {
