@@ -219,13 +219,13 @@ export default {
     },
     //批量删除
     batchDel() {
-      this.$confirm("将批量删除选择文章, 是否继续?", "提示", {
+      this.$confirm("将批量删除选择的分享, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
         this.loading = true;
-        this.$message.success(msg);
+        this.$message.success('删除成功');
         this.loading = false;
       });
     },
