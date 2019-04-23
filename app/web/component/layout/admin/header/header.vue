@@ -75,7 +75,7 @@ export default {
     },
     logout() {
       this.$axios.get('/admin/api/logout').then(res => {
-        if(!res.data.code) {
+        if(!res.data.data.code) {
           window.__INITIAL_STATE__ = null;
           window.userInfo = '';
           window.location.replace("/admin/login");

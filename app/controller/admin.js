@@ -37,8 +37,31 @@ module.exports = class AdminController extends egg.Controller {
       username,
       password,
     }
-    // ldap验证
-    await new Promise((resolve, reject) => {
+    let checkResult = await this.check(form_params);
+    console.log(checkResult);
+    if(!checkResult.errno) {
+      let md5 = crypto.createHash('md5');
+      form_params.password = md5.update(form_params.password).digest('hex');
+      let userInfo = await ctx.service.user.findUserByUsername(form_params.username);
+      if(userInfo) {
+        userInfo.password = form_params.password;
+        await ctx.service.user.updateUserByUsername(userInfo);
+        delete userInfo.id;
+        delete userInfo.password;
+        ctx.session.userInfo = userInfo;
+        ctx.body = checkResult;
+      } else {
+        await ctx.service.user.saveUser(form_params);
+        delete form_params.password;
+        ctx.session.userInfo = form_params;
+        ctx.body = form_params;
+      }
+    } else {
+      ctx.body = checkResult.errmsg;
+    }
+  }
+  async check(form_params) {
+    let checkResult = await new Promise((resolve, reject) => {
       request.post({
         url: 'https://service.inagora.org:50433/auth/check',
         strictSSL: false,
@@ -53,36 +76,9 @@ module.exports = class AdminController extends egg.Controller {
         }
       });
     }).then(checkResult => {
-      if(!checkResult.errno) {
-        // 验证成功保存用户
-        let md5 = crypto.createHash('md5');
-        form_params.password = md5.update(form_params.password).digest('hex');
-        new Promise((resolve, reject) => {
-          let result = ctx.service.user.findUserByUsername(form_params.username);
-          resolve(result);
-        }).then(res => {
-          if(res) { // 已存在，更新密码
-            res.password = form_params.password;
-            new Promise((resolve, reject) => {
-              ctx.service.user.updateUserByUsername(res);
-              resolve()
-            }).then(() => {
-              delete res.id;
-              delete res.password;
-              ctx.session.userInfo = res;
-              console.log(ctx.session.userInfo);
-              ctx.body = checkResult;
-            });
-          } else { // 不存在，存入
-            ctx.service.user.saveUser(form_params);
-            delete form_params.password;
-            ctx.session.userInfo = form_params;
-          }
-        });
-      } else {
-        ctx.body = checkResult.errmsg;
-      }
+      return checkResult;
     });
+    return checkResult;
   }
   async logout(ctx) {
     ctx.session.userInfo = null;
