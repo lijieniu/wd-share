@@ -1,8 +1,8 @@
 'use strict';
 const egg = require('egg');
 const qrcode = require('qr-image');
-const ldap = require('ldapjs');
 const request = require('request');
+const crypto = require('crypto');
 
 module.exports = class AdminController extends egg.Controller {
   async home(ctx) {
@@ -52,13 +52,35 @@ module.exports = class AdminController extends egg.Controller {
           reject(err);
         }
       });
-    }).then(res => {
-      if(!res.errno) {
-        delete form_params.password;
-        ctx.session.userInfo = form_params;
-        ctx.body = res;
+    }).then(checkResult => {
+      if(!checkResult.errno) {
+        // 验证成功保存用户
+        let md5 = crypto.createHash('md5');
+        form_params.password = md5.update(form_params.password).digest('hex');
+        new Promise((resolve, reject) => {
+          let result = ctx.service.user.findUserByUsername(form_params.username);
+          resolve(result);
+        }).then(res => {
+          if(res) { // 已存在，更新密码
+            res.password = form_params.password;
+            new Promise((resolve, reject) => {
+              ctx.service.user.updateUserByUsername(res);
+              resolve()
+            }).then(() => {
+              delete res.id;
+              delete res.password;
+              ctx.session.userInfo = res;
+              console.log(ctx.session.userInfo);
+              ctx.body = checkResult;
+            });
+          } else { // 不存在，存入
+            ctx.service.user.saveUser(form_params);
+            delete form_params.password;
+            ctx.session.userInfo = form_params;
+          }
+        });
       } else {
-        ctx.body = res.errmsg;
+        ctx.body = checkResult.errmsg;
       }
     });
   }

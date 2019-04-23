@@ -15,16 +15,16 @@ class UserService extends Service {
         let userList = this.collection.getPager(query);
         return userList;
     }
-    async createUser(user) {
+    async saveUser(user) {
         return this.collection.add(user);
     }
-    async findUserBySNo(student_no) {
+    async findUserByUsername(username) {
         const query = new Query();
-        query.where.student_no = student_no;
+        query.where.username = username;
         return this.collection.query(query);
     }
-    async updateUserBySNo(userInfo) {
-        return this.collection.update({student_no: userInfo.student_no}, userInfo);
+    async updateUserByUsername(userInfo) {
+        return this.collection.update({username: userInfo.username}, userInfo);
     }
 }
 

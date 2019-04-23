@@ -76,7 +76,7 @@ export default {
     logout() {
       this.$axios.get('/admin/api/logout').then(res => {
         if(!res.data.code) {
-          sessionStorage.setItem('userInfo', '');
+          window.__INITIAL_STATE__ = null;
           window.userInfo = '';
           window.location.replace("/admin/login");
         }
