@@ -18,6 +18,7 @@ export default function createStore(initState) {
     // topic
     topicList: [],
     topicTotal: 0,
+    topic: {},
     ...initState
   };
   return new Vuex.Store({

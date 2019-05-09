@@ -36,6 +36,13 @@ class TopicService extends Service {
   async deleteTopic(field) {
     let result = await this.collection.delete(field);
   }
+
+  async getTopicById(field) {
+    let query = new Query();
+    query.where = field;
+    let result = await this.collection.query(query);
+    return result;
+  }
 }
 
 module.exports = TopicService;

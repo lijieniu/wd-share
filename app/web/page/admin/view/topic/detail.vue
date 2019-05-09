@@ -6,8 +6,8 @@
           <div class="avatar"></div>
         </div>
         <div class="user-info-right">
-          <span class="username">牛利杰</span>
-          <span class="topic-create-time">2019年5月9日 阅读100</span>
+          <span class="username">{{topicInfo.topic_username}}</span>
+          <span class="topic-create-time">{{topicInfo.update_time | formatDate}} 阅读100</span>
         </div>
       </div>
       <div class="topic-info">
@@ -19,7 +19,7 @@
             <span>{{topicInfo.desc}}</span>
           </el-form-item>
           <el-form-item label="分享时间">
-            <span>{{topicInfo.topic_time}}</span>
+            <span>{{topicInfo.topic_time | formatDate}}</span>
           </el-form-item>
           <el-form-item label="地点">
             <span>{{topicInfo.topic_position}}</span>
@@ -29,7 +29,8 @@
     </div>
 </template>
 <script type="babel">
-import {} from '../../store/mutation-type';
+import {SET_TOPIC_DETAIL} from '../../store/mutation-type';
+import moment from 'moment';
 export default {
   components: {},
   data() {
@@ -42,11 +43,22 @@ export default {
       }
     };
   },
+  filters: {
+    formatDate(time) {
+      return moment(new Date(time)).format('YYYY-MM-DD HH:mm:ss');
+    },
+  },
   methods: {
     
   },
   computed: {
     
+  },
+  created() {
+    let topicId = this.$route.params.id;
+    this.$store.dispatch(SET_TOPIC_DETAIL, {id: topicId}).then(() => {
+      this.topicInfo = this.$store.state.topic;
+    });
   }
 };
 </script>
@@ -83,6 +95,9 @@ export default {
 .topic-create-time {
   color: #909090;
   font-size: 14px;
+}
+.topic-info {
+  width: 50%;
 }
 </style>
 

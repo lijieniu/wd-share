@@ -55,6 +55,11 @@ const actions = {
     return request.delete(`/admin/api/topic/${id}`, store).then(response => {
       store.commit(Type.DELETE_TOPIC, { id });
     });
+  },
+  SET_TOPIC_DETAIL: (store, { id }) => {
+    return request.get(`/admin/api/topic/${id}`).then(response => {
+      store.commit(Type.SET_TOPIC_DETAIL, response.data);
+    });
   }
 };
 

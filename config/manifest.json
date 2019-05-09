@@ -1,15 +1,16 @@
 {
-  "chunk/0.js": "/public/js/chunk/0.js",
   "chunk/1.css": "/public/css/1.css",
   "chunk/1.js": "/public/js/chunk/1.js",
   "chunk/2.css": "/public/css/2.css",
   "chunk/2.js": "/public/js/chunk/2.js",
-  "chunk/3.css": "/public/css/3.css",
-  "chunk/3.js": "/public/js/chunk/3.js",
+  "common.js": "/public/js/chunk/common.js",
+  "chunk/4.css": "/public/css/4.css",
   "chunk/4.js": "/public/js/chunk/4.js",
   "chunk/5.js": "/public/js/chunk/5.js",
   "chunk/6.js": "/public/js/chunk/6.js",
   "chunk/7.js": "/public/js/chunk/7.js",
+  "chunk/8.js": "/public/js/chunk/8.js",
+  "chunk/9.js": "/public/js/chunk/9.js",
   "chunk/10.css": "/public/css/10.css",
   "chunk/10.js": "/public/js/chunk/10.js",
   "admin.css": "/public/css/admin.css",
@@ -24,6 +25,7 @@
       "js": [
         "/public/js/vendor.js",
         "/public/js/runtime.js",
+        "/public/js/chunk/common.js",
         "/public/js/chunk/admin.js"
       ],
       "css": [

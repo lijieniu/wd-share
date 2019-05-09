@@ -29,7 +29,7 @@ export default function createRouter() {
         component: () => import('../view/topic/index.vue')
       },
       {
-        path: '/topic/:id/detail',
+        path: '/topic/:id',
         component: () => import('../view/topic/detail.vue')
       },
       {

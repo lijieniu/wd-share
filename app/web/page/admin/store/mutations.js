@@ -8,7 +8,8 @@ import {
   SET_USER_LIST,
   SET_TOPIC_LIST,
   SET_SAVE_TOPIC,
-  DELETE_TOPIC
+  DELETE_TOPIC,
+  SET_TOPIC_DETAIL
 } from './mutation-type';
 import { strictEqual } from 'assert';
 
@@ -48,6 +49,9 @@ const mutations = {
     state.topicList = state.topicList.filter(item => {
       return item.id !== id;
     });
+  },
+  [SET_TOPIC_DETAIL](state, data) {
+    state.topic = data.data;
   }
 };
 export default mutations;

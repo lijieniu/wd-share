@@ -235,7 +235,7 @@ export default {
     },
     toDetail(topicId) {
       this.$router.push({
-        path: `/topic/${topicId}/detail`
+        path: `/topic/${topicId}`
       });
     }
   },
