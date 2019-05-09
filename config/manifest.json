@@ -10,6 +10,8 @@
   "chunk/5.js": "/public/js/chunk/5.js",
   "chunk/6.js": "/public/js/chunk/6.js",
   "chunk/7.js": "/public/js/chunk/7.js",
+  "chunk/10.css": "/public/css/10.css",
+  "chunk/10.js": "/public/js/chunk/10.js",
   "admin.css": "/public/css/admin.css",
   "admin.js": "/public/js/chunk/admin.js",
   "runtime.js": "/public/js/runtime.js",
