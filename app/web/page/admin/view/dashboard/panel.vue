@@ -1,9 +1,37 @@
 <template>
-  <el-row class="panel-group" :gutter="40">
+  <!-- <el-row class="panel-group" :gutter="40">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div :style="{width: '300px', height: '300px'}" id="myEcharts">图表</div>
     </el-col>
-  </el-row>
+  </el-row> -->
+  <div class="page-index">
+    <el-row type="flex" justify="center" align="middle">
+      <el-col :span="8">
+        <p>本期精彩</p>
+        <el-card :body-style="{padding: '0px'}">
+          <div>
+            <p class="title">豌豆公主技术嘉年华一一第一期</p>
+            <img class="card-img" src="https://ossimg.wonderfull.cn/7f330c99c1be1cbf7c91264edbe03c90.png?x-oss-process=image/resize,w_1041,h_558,m_lfit/format,png" alt="">
+            <p class="topic-title"><span class="item">主题：</span><span class="content">一个牛逼的主题</span></p>
+            <p class="topic-username"><span class="item">主讲人：</span><span class="content">牛利杰</span></p>
+            <p class="topic-time"><span class="item">时间：</span><span class="content">2019年5月10日 17:00:00</span></p>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <p>下期预告</p>
+        <el-card :body-style="{padding: '0px'}">
+          <div>
+            <p class="title">豌豆公主技术嘉年华一一第二期</p>
+            <img class="card-img" src="https://ossimg.wonderfull.cn/7f330c99c1be1cbf7c91264edbe03c90.png?x-oss-process=image/resize,w_1041,h_558,m_lfit/format,png" alt="">
+            <p class="topic-title"><span class="item">主题：</span><span class="content">一个更牛逼的主题</span></p>
+            <p class="topic-username"><span class="item">主讲人：</span><span class="content">牛利杰</span></p>
+            <p class="topic-time"><span class="item">时间：</span><span class="content">2019年5月17日 17:00:00</span></p>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
@@ -16,26 +44,49 @@ export default {
     }
   },
   mounted() {
-    let myEcharts = this.$echarts.init(document.getElementById('myEcharts'));
-    myEcharts.setOption({
-      title: {
-        text: '我的图表'
-      },
-      xAxis: {
-        data: ['a', 'b']
-      },
-      yAxis: {},
-      series: {
-        name: '测试',
-        type: 'bar',
-        data: [1, 2]
-      }
-    });
+    // let myEcharts = this.$echarts.init(document.getElementById('myEcharts'));
+    // myEcharts.setOption({
+    //   title: {
+    //     text: '我的图表'
+    //   },
+    //   xAxis: {
+    //     data: ['a', 'b']
+    //   },
+    //   yAxis: {},
+    //   series: {
+    //     name: '测试',
+    //     type: 'bar',
+    //     data: [1, 2]
+    //   }
+    // });
   }
 };
 </script>
 
 <style scoped>
+.el-col {
+  margin: 20px;
+}
+.card-img {
+  width: 100%;
+}
+.title {
+  font-weight: bold;
+  line-height: 50px;
+}
+.topic-title, .topic-username, .topic-time {
+  font-size: 16px;
+  text-align: start;
+}
+.topic-title .content, .topic-username .content, .topic-time .content {
+  font-size: 20px;
+  font-weight: 500;
+}
+.topic-title .item, .topic-username .item, .topic-time .item {
+  width: 100px;
+  display: inline-block;
+  text-align: end;
+}
 .panel-group {
   margin-top: 18px;
 }
