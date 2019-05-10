@@ -69,9 +69,7 @@
                     label="操作"
                     width="240">
                 <template slot-scope="props">
-                    <router-link :to="{params: {id: props.row.id}}" tag="span">
-                        <el-button type="info" size="small" icon="edit" @click="handleEdit(props.$index, props.row)">修改</el-button>
-                    </router-link>
+                    <el-button type="info" size="small" icon="edit" @click="handleEdit(props.$index, props.row)">修改</el-button>
                     <el-button type="danger" size="small" icon="delete" @click="handleDelete(props.$index, props.row)">删除</el-button>
                     <el-button type="success" size="small" icon="delete" @click="toDetail(props.row.id)">详情</el-button>
                 </template>
