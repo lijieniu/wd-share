@@ -2,6 +2,7 @@
 module.exports = app => {
   require('./router/user')(app);
   require('./router/topic')(app);
+  require('./router/comment')(app);
   const { router, controller } = app;
   router.get('/', controller.admin.home);
   router.get('/admin/api/article/list', controller.admin.list);

@@ -28,6 +28,8 @@ class TopicController extends Controller {
         let { ctx } = this;
         let topicId = ctx.params.id;
         let topicInfo = await ctx.service.topic.getTopicById({id: topicId});
+        let commentList = await ctx.service.comment.getCommentByTopicId({topic_id: topicId});
+        topicInfo.commentList = commentList;
         this.ctx.body = topicInfo;
     }
 };

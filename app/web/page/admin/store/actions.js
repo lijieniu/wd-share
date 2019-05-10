@@ -60,6 +60,11 @@ const actions = {
     return request.get(`/admin/api/topic/${id}`).then(response => {
       store.commit(Type.SET_TOPIC_DETAIL, response.data);
     });
+  },
+  SET_SAVE_COMMENT: (store, json) => {
+    request.post('/admin/api/comment', json, store).then(response => {
+      console.log(response);
+    });
   }
 };
 

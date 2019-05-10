@@ -4,8 +4,8 @@ module.exports = class Collection {
     this.db = db;
     this.name = name;
   }
-  get() {
-    return this.db.get(this.name);
+  get(json) {
+    return this.db.get(this.name, json);
   }
   add(json) {
     return this.db.add(this.name, json);

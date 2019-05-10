@@ -31,36 +31,11 @@
           </el-form>
         </div>
         <div class="topic-info-right">
-          <div class="rating-item">
-            <label>演讲技巧</label>
+          <div class="rating-item" v-for="(rating, index) in ratingValues" :key="index">
+            <label>{{rating.label}}</label>
             <el-rate 
-              v-model="rateValue"
-              :change="changeRating(1)"
-              show-score></el-rate>
-          </div>
-          <div class="rating-item">
-            <label>衣着</label>
-            <el-rate 
-              v-model="rateValue"
-              show-score></el-rate>
-          </div>
-          <div class="rating-item">
-            <label>内容</label>
-            <el-rate 
-              v-model="rateValue"
-              show-score></el-rate>
-          </div>
-          <div class="rating-item">
-            <label>互动</label>
-            <el-rate 
-              v-model="rateValue"
-              show-score></el-rate>
-          </div>
-          <div class="rating-item">
-            <label>满意度</label>
-            <el-rate 
-              v-model="rateValue"
-              show-text></el-rate>
+              v-model="rating.value"
+              :change="changeRating(index)"></el-rate>
           </div>
         </div>
       </div>
@@ -68,70 +43,57 @@
       <div class="comment-input">
         <div class="avatar"></div>
         <el-input placeholder="输入评论..." v-model="commentContent" clearable></el-input>
-        <el-button type="primary">评论</el-button>
+        <el-button :disabled="!commentContent" @click="comment" :type="'primary'">评论</el-button>
       </div>
-      <div class="comment-list">
-        <div class="comment-list-item">
+      <div class="comment-list" v-if="commentList.length > 0">
+        <div class="comment-list-item" v-for="(comment, index) in commentList" :key="index">
           <div class="item-up">
             <div class="comment-avatar"></div>
             <div class="comment-info">
-              <span class="comment-username">niulijie</span>
-              <span class="comment-content">讲的不错,不过还有提升的空间，再接再厉</span>
+              <span class="comment-username">{{comment.user_name ? comment.user_name : '匿名'}}</span>
+              <span class="comment-content">{{comment.content}}</span>
             </div>
           </div>
           <div class="item-toolbar">
-            <span class="comment-time">刚刚</span>
-          </div>
-        </div>
-        <div class="comment-list-item">
-          <div class="item-up">
-            <div class="comment-avatar"></div>
-            <div class="comment-info">
-              <span class="comment-username">niulijie</span>
-              <span class="comment-content">讲的不错,不过还有提升的空间，再接再厉</span>
-            </div>
-          </div>
-          <div class="item-toolbar">
-            <span class="comment-time">刚刚</span>
-          </div>
-        </div>
-        <div class="comment-list-item">
-          <div class="item-up">
-            <div class="comment-avatar"></div>
-            <div class="comment-info">
-              <span class="comment-username">niulijie</span>
-              <span class="comment-content">讲的不错,不过还有提升的空间，再接再厉</span>
-            </div>
-          </div>
-          <div class="item-toolbar">
-            <span class="comment-time">刚刚</span>
-          </div>
-        </div>
-        <div class="comment-list-item">
-          <div class="item-up">
-            <div class="comment-avatar"></div>
-            <div class="comment-info">
-              <span class="comment-username">niulijie</span>
-              <span class="comment-content">讲的不错,不过还有提升的空间，再接再厉</span>
-            </div>
-          </div>
-          <div class="item-toolbar">
-            <span class="comment-time">刚刚</span>
+            <span class="comment-time">{{comment.create_time ? comment.create_time : new Date() | formatDate}}</span>
           </div>
         </div>
       </div>
+      <div class="comment-empty" v-else>暂无评论～～～</div>
     </div>
 </template>
 <script type="babel">
-import {SET_TOPIC_DETAIL} from '../../store/mutation-type';
+import {SET_TOPIC_DETAIL, SET_SAVE_ARTICLE, SET_SAVE_COMMENT} from '../../store/mutation-type';
 import moment from 'moment';
 export default {
   components: {},
   data() {
     return {
       topicInfo: {},
-      rateValue: 3,
-      commentContent: ''
+      ratingValues: [
+        {
+          label: '演讲技巧',
+          value: 3
+        },
+        {
+          label: '衣着',
+          value: 2
+        },
+        {
+          label: '内容',
+          value: 4
+        },
+        {
+          label: '互动',
+          value: 5
+        },
+        {
+          label: '满意度',
+          value: 3
+        }
+      ],
+      commentContent: '',
+      commentList: []
     };
   },
   filters: {
@@ -140,8 +102,21 @@ export default {
     },
   },
   methods: {
-    changeRating(type) {
-      console.log(this.rateValue);
+    changeRating(index) {
+      let rating = this.ratingValues[index];
+      console.log(this.ratingValues);
+    },
+    comment() {
+      let comment = {
+        topic_id: this.$route.params.id,
+        content: this.commentContent,
+        rating: JSON.stringify(this.ratingValues),
+        user_name: window.userInfo.username
+      }
+      this.commentList.unshift(comment);
+      this.$store.dispatch(SET_SAVE_COMMENT, comment).then(() => {
+        this.commentContent = '';
+      });
     }
   },
   computed: {
@@ -151,6 +126,7 @@ export default {
     let topicId = this.$route.params.id;
     this.$store.dispatch(SET_TOPIC_DETAIL, {id: topicId}).then(() => {
       this.topicInfo = this.$store.state.topic;
+      this.commentList = this.topicInfo.commentList;
     });
   }
 };
@@ -222,22 +198,24 @@ export default {
   justify-content: center;
 }
 .comment-input input {
-  height: 40px;
-  width: 90%;
-  border-radius: 3px;
-  border: 1px solid #f1f1f1;
-  font-size: 16px;
-  padding: 5px 10px;
-  margin-left: 10px;
+  margin: 0 10px;
 }
 .el-input {
   width: 83%;
+}
+.el-button {
+  margin-left: 20px;
 }
 .comment-list {
   width: 70%;
   display: flex;
   margin: 0 auto;
   flex-direction: column;
+}
+.comment-empty {
+  text-align: center;
+  font-size: 14px;
+  color: #505050;
 }
 .comment-avatar {
   width: 40px;

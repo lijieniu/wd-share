@@ -18,7 +18,6 @@
   "runtime.js": "/public/js/runtime.js",
   "font/index.css": "/public/font/element-icons.woff",
   "font/font-awesome.min.css": "/public/font/fontawesome-webfont.woff2",
-  "img/detail.vue?vue&type=style&index=0&lang=css&": "/public/img/default-avatar.png",
   "img/font-awesome.min.css": "/public/img/fontawesome-webfont.svg",
   "vendor.js": "/public/js/vendor.js",
   "deps": {

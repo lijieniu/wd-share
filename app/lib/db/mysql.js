@@ -38,8 +38,8 @@ module.exports = class MySQLDB extends Base {
         let result = await this.db.update(name, entity, {where: where});
         return result.affectedRows === 1;
     }
-    async get(name) {
-        let result = await this.db.select(name);
+    async get(name, query) {
+        let result = await this.db.select(name, {where: query.where, orders: [[query.orderByField, query.orderBy]]});
         return result;
     }
     async delete(name, field) {
