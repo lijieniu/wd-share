@@ -32,5 +32,10 @@ class TopicController extends Controller {
         topicInfo.commentList = commentList;
         this.ctx.body = topicInfo;
     }
+
+    async getWeekTopic() {
+        let weekTopic = await this.ctx.service.topic.getWeekTwoTopic();
+        this.ctx.body = weekTopic;
+    }
 };
 module.exports = TopicController;

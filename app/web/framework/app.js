@@ -2,6 +2,11 @@ import Vue from 'vue';
 import { sync } from 'vuex-router-sync';
 import VueI18n from 'vue-i18n';
 import ECharts from 'echarts';
+import custom from './filters/custom';
+
+Object.keys(custom).forEach(item => {
+  Vue.filter(item, custom[item]);
+});
 
 Vue.prototype.$echarts = ECharts;
 

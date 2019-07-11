@@ -9,24 +9,24 @@
       <el-col :span="8">
         <p>本期精彩</p>
         <el-card :body-style="{padding: '0px'}">
-          <div>
-            <p class="title">豌豆公主技术嘉年华一一第一期</p>
+          <div @click="toDetail(currWeekTopic.id)">
+            <p class="title">豌豆公主技术嘉年华</p>
             <img class="card-img" src="https://ossimg.wonderfull.cn/7f330c99c1be1cbf7c91264edbe03c90.png?x-oss-process=image/resize,w_1041,h_558,m_lfit/format,png" alt="">
-            <p class="topic-title"><span class="item">主题：</span><span class="content">一个牛逼的主题</span></p>
-            <p class="topic-username"><span class="item">主讲人：</span><span class="content">牛利杰</span></p>
-            <p class="topic-time"><span class="item">时间：</span><span class="content">2019年5月10日 17:00:00</span></p>
+            <p class="topic-title"><span class="item">主题：</span><span class="content">{{currWeekTopic.title}}</span></p>
+            <p class="topic-username"><span class="item">主讲人：</span><span class="content">{{currWeekTopic.topic_username}}</span></p>
+            <p class="topic-time"><span class="item">时间：</span><span class="content">{{currWeekTopic.topic_time | formatTime('YYYY年MM月DD日 HH:mm:ss')}}</span></p>
           </div>
         </el-card>
       </el-col>
       <el-col :span="8">
         <p>下期预告</p>
         <el-card :body-style="{padding: '0px'}">
-          <div>
-            <p class="title">豌豆公主技术嘉年华一一第二期</p>
+          <div @click="toDetail(nextWeekTopic.id)">
+            <p class="title">豌豆公主技术嘉年华</p>
             <img class="card-img" src="https://ossimg.wonderfull.cn/7f330c99c1be1cbf7c91264edbe03c90.png?x-oss-process=image/resize,w_1041,h_558,m_lfit/format,png" alt="">
-            <p class="topic-title"><span class="item">主题：</span><span class="content">一个更牛逼的主题</span></p>
-            <p class="topic-username"><span class="item">主讲人：</span><span class="content">牛利杰</span></p>
-            <p class="topic-time"><span class="item">时间：</span><span class="content">2019年5月17日 17:00:00</span></p>
+            <p class="topic-title"><span class="item">主题：</span><span class="content">{{nextWeekTopic.title}}</span></p>
+            <p class="topic-username"><span class="item">主讲人：</span><span class="content">{{nextWeekTopic.topic_username}}</span></p>
+            <p class="topic-time"><span class="item">时间：</span><span class="content">{{nextWeekTopic.topic_time | formatTime('YYYY年MM月DD日 HH:mm:ss')}}</span></p>
           </div>
         </el-card>
       </el-col>
@@ -37,13 +37,30 @@
 <script>
 
 export default {
+  name: 'panel',
+  data() {
+    return {
+      currWeekTopic: {},
+      nextWeekTopic: {}
+    }
+  },
   components: {},
   methods: {
     handleSetLineChartData(type) {
       this.$emit("handleSetLineChartData", type);
+    },
+    toDetail(topicId) {
+      this.$router.push({
+        path: `/topic/${topicId}`
+      });
     }
   },
   mounted() {
+    // 获取本周以及下周的两个分享
+    this.$axios.get('/admin/api/getWeekTopic').then(res => {
+      this.currWeekTopic = res.data.data[1];
+      this.nextWeekTopic = res.data.data[0];
+    });
     // let myEcharts = this.$echarts.init(document.getElementById('myEcharts'));
     // myEcharts.setOption({
     //   title: {

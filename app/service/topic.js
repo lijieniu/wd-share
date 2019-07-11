@@ -43,6 +43,15 @@ class TopicService extends Service {
     let result = await this.collection.query(query);
     return result;
   }
+
+  async getWeekTwoTopic() {
+    // 获取最新的两条数据当作本周和下周的数据
+    const results = await this.ctx.app.mysql.select('topic', {
+      orders: [['id', 'desc']],
+      limit: 2
+    });
+    return results;
+  }
 }
 
 module.exports = TopicService;
