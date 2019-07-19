@@ -22,7 +22,7 @@ class TopicService extends Service {
     return result;
   }
   async getTopicList(json) {
-    let { topic_username, title, pageSize, pageIndex } = json;
+    let { topic_username, title, pageSize, pageIndex, isMine } = json;
     let query = new Query();
     query.orderByField = 'id';
     query.orderBy = 'desc';
@@ -30,6 +30,7 @@ class TopicService extends Service {
     query.like.topic_username = topic_username;
     query.pageSize = pageSize;
     query.pageIndex = pageIndex;
+    if(isMine) query.where = {topic_username: this.ctx.session.userInfo.username};
     let result = await this.collection.getPager(query);
     return result;
   }

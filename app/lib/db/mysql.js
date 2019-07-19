@@ -10,15 +10,25 @@ module.exports = class MySQLDB extends Base {
         // let result = await this.db.select(name);
         console.log(query);
         let sql = `select * from ${name}`;
-        if(Object.keys(query.like).length > 0) {
+        if(Object.keys(query.like).length > 0 || Object.keys(query.where).length > 0) {
             sql += ` where `;
-            Object.keys(query.like).forEach((item, index) => {
-                sql += `${item} like '%${query.like[item]}%'`;
-                if(index !== (Object.keys(query.like).length - 1)) {
-                    sql += ' and ';
-                }
-            });
+            if(Object.keys(query.like).length > 0) {
+                Object.keys(query.like).forEach((item, index) => {
+                    sql += `${item} like '%${query.like[item]}%'`;
+                    if(index !== (Object.keys(query.like).length - 1)) {
+                        sql += ' and ';
+                    }
+                });
+            } else {
+                Object.keys(query.where).forEach((item, index) => {
+                    sql += `${item} = '${query.where[item]}'`;
+                    if(index !== (Object.keys(query.where).length - 1)) {
+                        sql += ' and ';
+                    }
+                });
+            }
         }
+        
         sql += ` order by ${query.orderByField} ${query.orderBy}`;
         sql += ` limit ${(query._pageIndex - 1) * query._pageSize}, ${query._pageSize}`;
         console.log(sql);

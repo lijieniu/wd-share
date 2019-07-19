@@ -118,6 +118,16 @@
           <el-form-item label="地点">
             <el-input v-model="newTopicInfo.topic_position"></el-input>
           </el-form-item>
+          <!-- <el-form-item>
+            <el-upload
+              drag
+              action=""
+              multiple>
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+              <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+            </el-upload>
+          </el-form-item> -->
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="isShowNewShareDilog = false">取 消</el-button>
@@ -172,6 +182,8 @@ export default {
       this.newTopicInfo = {}
     },
     fetchApi({ $store, $router }, json) {
+      json = json || {};
+      json.isMine = 1;
       return $store.dispatch(SET_TOPIC_LIST, json);
     },
     query() {
