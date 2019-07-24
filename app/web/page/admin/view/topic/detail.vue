@@ -3,7 +3,8 @@
       <p class="title">分享详情</p>
       <div class="user-info">
         <div class="user-info-left">
-          <div class="avatar"></div>
+          <div class="avatar-defalut" v-if="!userInfo.avatar"></div>
+          <div class="avatar" v-else><img :src="userInfo.avatar"/></div>
         </div>
         <div class="user-info-right">
           <span class="username">{{topicInfo.topic_username}}</span>
@@ -41,14 +42,16 @@
       </div>
       <p class="comment">评论</p>
       <div class="comment-input">
-        <div class="avatar"></div>
+        <div class="avatar-defalut" v-if="!userInfo.avatar"></div>
+        <div class="avatar" v-else><img :src="userInfo.avatar"/></div>
         <el-input placeholder="输入评论..." v-model="commentContent" clearable></el-input>
         <el-button :disabled="!commentContent" @click="comment" :type="'primary'">评论</el-button>
       </div>
       <div class="comment-list" v-if="commentList.length > 0">
         <div class="comment-list-item" v-for="(comment, index) in commentList" :key="index">
           <div class="item-up">
-            <div class="comment-avatar"></div>
+            <div class="comment-avatar-default" v-if="!userInfo.avatar"></div>
+            <div class="comment-avatar" v-else><img :src="userInfo.avatar"/></div>
             <div class="comment-info">
               <span class="comment-username">{{comment.user_name ? comment.user_name : '匿名'}}</span>
               <span class="comment-content">{{comment.content}}</span>
@@ -73,27 +76,29 @@ export default {
       ratingValues: [
         {
           label: '演讲技巧',
-          value: 3
+          value: 0
         },
         {
           label: '衣着',
-          value: 2
+          value: 0
         },
         {
           label: '内容',
-          value: 4
+          value: 0
         },
         {
           label: '互动',
-          value: 5
+          value: 0
         },
         {
           label: '满意度',
-          value: 3
+          value: 0
         }
       ],
       commentContent: '',
-      commentList: []
+      commentList: [],
+      value: '3.7',
+      userInfo: {}
     };
   },
   filters: {
@@ -104,7 +109,6 @@ export default {
   methods: {
     changeRating(index) {
       let rating = this.ratingValues[index];
-      console.log(this.ratingValues);
     },
     comment() {
       let comment = {
@@ -117,6 +121,20 @@ export default {
       this.$store.dispatch(SET_SAVE_COMMENT, comment).then(() => {
         this.commentContent = '';
       });
+    },
+    formatRating() {
+      if(this.commentList.length > 0) {
+        let sumRating = {};
+        this.commentList.forEach(item => {
+          let rating = JSON.parse(item.rating);
+          this.ratingValues.forEach((item, index) => {
+            item.value += rating[index].value;
+          });
+        });
+        this.ratingValues.forEach((item, index) => {
+          item.value = parseFloat((item.value / this.commentList.length).toFixed(1));
+        });
+      }
     }
   },
   computed: {
@@ -127,7 +145,9 @@ export default {
     this.$store.dispatch(SET_TOPIC_DETAIL, {id: topicId}).then(() => {
       this.topicInfo = this.$store.state.topic;
       this.commentList = this.topicInfo.commentList;
+      this.formatRating();
     });
+    this.userInfo = window.userInfo;
   }
 };
 </script>
@@ -144,12 +164,17 @@ export default {
   width: 50px;
   height: 50px;
 }
-.avatar, .comment-avatar {
+.avatar-default, .comment-avatar-default {
   background-image: url('../../../../asset/images/default-avatar.png');
   background-size: 100% 100%;
   background-position: center;
   width: 50px;
   height: 50px;
+  border-radius: 50%;
+}
+.comment-avatar img, .avatar img {
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
 }
 .user-info-right {
@@ -220,6 +245,11 @@ export default {
 .comment-avatar {
   width: 40px;
   height: 40px;
+}
+.avatar {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
 }
 .comment-list-item {
   padding-left: 80px;

@@ -13,4 +13,5 @@ module.exports = app => {
   router.get('/admin(/.+)?', controller.admin.home);
   router.post('/admin/api/login', controller.admin.login);
   router.get('/admin/api/logout', controller.admin.logout);
+  router.post('/admin/api/uploadfile', controller.admin.uploadfile);
 };

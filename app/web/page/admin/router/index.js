@@ -25,6 +25,10 @@ export default function createRouter() {
         component: () => import('../view/user/index.vue')
       },
       {
+        path: '/user/center',
+        component: () => import('../view/user/center.vue')
+      },
+      {
         path: '/topic',
         component: () => import('../view/topic/index.vue')
       },

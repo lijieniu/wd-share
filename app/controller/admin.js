@@ -31,6 +31,14 @@ module.exports = class AdminController extends egg.Controller {
     let img = qrcode.image('/user/sign', {type: 'png'});
     this.ctx.body = img;
   }
+  async uploadfile(ctx) {
+    request.post({
+      url: 'https://fex.wandougongzhu.cn/upfile',
+      formData: ctx.request.files[0].filepath,
+    }, (err, res, body) => {
+      console.log(body);
+    });
+  }
   async login(ctx) {
     let {username, password} = ctx.request.body;
     let form_params = {
@@ -38,7 +46,6 @@ module.exports = class AdminController extends egg.Controller {
       password,
     }
     let checkResult = await this.check(form_params);
-    console.log(checkResult);
     if(!checkResult.errno) {
       let md5 = crypto.createHash('md5');
       form_params.password = md5.update(form_params.password).digest('hex');

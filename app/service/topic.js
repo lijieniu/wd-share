@@ -46,11 +46,16 @@ class TopicService extends Service {
   }
 
   async getWeekTwoTopic() {
+    let curStartTime = moment().startOf('isoWeek').format('YYYY-MM-DD HH:mm:ss');
+    let curEndTime = moment().endOf('isoWeek').format('YYYY-MM-DD HH:mm:ss');
+    let nextStartTime = moment(curStartTime).add(1, 'w').format('YYYY-MM-DD HH:mm:ss');
+    let nextEndTime = moment(curEndTime).add(1, 'w').format('YYYY-MM-DD HH:mm:ss');
     // 获取最新的两条数据当作本周和下周的数据
-    const results = await this.ctx.app.mysql.select('topic', {
-      orders: [['id', 'desc']],
-      limit: 2
-    });
+    const curResult = await this.ctx.app.mysql.query('select * from topic where topic_time >= ? and topic_time <= ?', [curStartTime, curEndTime]);
+    const nextResult = await this.ctx.app.mysql.query('select * from topic where topic_time >= ? and topic_time <= ?', [nextStartTime, nextEndTime]);
+    let results = {};
+    results.currWeekTopic = curResult[0];
+    results.nextWeekTopic = nextResult[0];
     return results;
   }
 }

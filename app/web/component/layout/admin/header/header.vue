@@ -32,7 +32,7 @@
               {{userInfo.username}}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>{{$t('header.profile')}}</el-dropdown-item>
+            <el-dropdown-item @click.native="toUserCenter">{{$t('header.profile')}}</el-dropdown-item>
             <el-dropdown-item @click.native="logout">{{$t('header.logout')}}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -82,6 +82,11 @@ export default {
         }
       });
       
+    },
+    toUserCenter() {
+      this.$router.push({
+        path: '/user/center'
+      });
     },
     switchLang(lang) {
       window.location.href = `/admin?locale=${lang}`;

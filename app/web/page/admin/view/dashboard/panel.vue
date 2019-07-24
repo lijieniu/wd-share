@@ -18,7 +18,7 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="8" v-if="nextWeekTopic">
         <p>下期预告</p>
         <el-card :body-style="{padding: '0px'}">
           <div @click="toDetail(nextWeekTopic.id)">
@@ -40,8 +40,8 @@ export default {
   name: 'panel',
   data() {
     return {
-      currWeekTopic: {},
-      nextWeekTopic: {}
+      currWeekTopic: null,
+      nextWeekTopic: null
     }
   },
   components: {},
@@ -58,8 +58,12 @@ export default {
   mounted() {
     // 获取本周以及下周的两个分享
     this.$axios.get('/admin/api/getWeekTopic').then(res => {
-      this.currWeekTopic = res.data.data[1];
-      this.nextWeekTopic = res.data.data[0];
+      if(res.data.data.currWeekTopic) {
+        this.currWeekTopic = res.data.data.currWeekTopic;
+      }
+      if(res.data.data.nextWeekTopic) {
+        this.nextWeekTopic = res.data.data.nextWeekTopic;
+      }
     });
     // let myEcharts = this.$echarts.init(document.getElementById('myEcharts'));
     // myEcharts.setOption({
